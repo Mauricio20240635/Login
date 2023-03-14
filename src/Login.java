@@ -13,8 +13,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login extends JFrame {
     JTextField usernameField;
@@ -65,22 +65,17 @@ public class Login extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-          String str,str2;
-            str =usernameField.getText();
-            str2= passwordField.getText();
-            boolean Respuesta;
-            Respuesta = txt.readToFile(str,str2);
-            if(Respuesta=true){
-               setVisible(false);
             try {
-            // Close current program
-            Runtime.getRuntime().exec("taskkill /f /im javaw.exe");
+                String str,str2;
+                str =usernameField.getText();
+                str2= passwordField.getText();
+                boolean Respuesta;
+                Respuesta = txt.readToFile(str,str2);
+                if(Respuesta=true){
 
-            // Open another program (e.g. Notepad)
-            Runtime.getRuntime().exec("notepad.exe");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -89,10 +84,14 @@ public class Login extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-        String str,str2;
-            str =usernameField.getText();
-            str2= passwordField.getText();
-            txt.saveToFile(str,str2);
+            try {
+                String str,str2;
+                str =usernameField.getText();
+                str2= passwordField.getText();
+                txt.saveToFile(str,str2);
+            } catch (Exception ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

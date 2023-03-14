@@ -18,11 +18,11 @@ import javax.swing.JOptionPane;
  */
 public class Archivo {
    Cifrado cf=new Cifrado();
-      public void saveToFile(String  username,String password ) {
+      public void saveToFile(String  username,String password ) throws Exception {
           
         try {
             FileWriter writer = new FileWriter("usuarios.txt", true); // append to file
-            writer.write(username + "," + cf.encriptar(password) + "\n");
+            writer.write(username + "," + Cifrado.cifrar(password)  + "\n");
             writer.close();
             Component o = null;
             JOptionPane.showMessageDialog(o, "se guardo el usuario y contraseña");
@@ -32,7 +32,7 @@ public class Archivo {
        }
        
  
-    public boolean readToFile(String username, String password) {
+    public boolean readToFile(String username, String password) throws Exception {
               boolean s =false;
  
         try (BufferedReader br = new BufferedReader(new FileReader("usuarios.txt"))) {
@@ -42,7 +42,7 @@ public class Archivo {
                 String storedUsername = parts[0];
                 String storedPassword = parts[1];
 
-                if (username.equals(storedUsername) && cf.encriptar(password).equals(storedPassword)) {
+                if (username.equals(storedUsername) && Cifrado.cifrar(password).equals(storedPassword)) {
                     Component o = null;
                    JOptionPane.showMessageDialog(o, "Se inicio sesion correctamente");
                     s=true;

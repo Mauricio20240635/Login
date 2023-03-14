@@ -8,34 +8,31 @@
  *
  * @author mauri
  */
-public class Cifrado {
-    public String encriptar(String palabra) {
-        String encriptado = "";
-        char caracteres[] = palabra.toCharArray();
-        for (int i = 0; i < caracteres.length; i++) {
-            int b = caracteres[i];
-            if (b > 64 && b < 123) {
-                caracteres[i] = (char) (caracteres[i] + (char) 3);
-            }
-        }
-        int inicio = 0;
-        int fin = caracteres.length - 1;
-        char temp;
-        while (fin > inicio) {
-            temp = caracteres[inicio];
-            caracteres[inicio] = caracteres[fin];
-            caracteres[fin] = temp;
-            fin--;
-            inicio++;
-        }
-        double a = caracteres.length / 2;
-        int valor = (int) a;
-        for (int i = valor; i < caracteres.length; i++) {
-            caracteres[i] = (char) (caracteres[i] - (char) 1);
-        }
-        encriptado = String.valueOf(caracteres);
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.util.Base64;
 
-        return encriptado;
+public class Cifrado {
+    
+    public static String cifrar(String texto) throws Exception {
+        // Generar una clave secreta
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(128);
+        SecretKey clave = keyGenerator.generateKey();
+
+        // Cifrar el texto con la clave secreta
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, clave);
+        byte[] textoCifrado = cipher.doFinal(texto.getBytes());
+
+        // Codificar el texto cifrado en Base64
+        byte[] claveEnBytes = clave.getEncoded();
+        String claveEnBase64 = Base64.getEncoder().encodeToString(claveEnBytes);
+        String textoCifradoEnBase64 = Base64.getEncoder().encodeToString(textoCifrado);
+
+        // Combinar la clave y el texto cifrado en un solo string separado por un guion
+        return claveEnBase64 + "-" + textoCifradoEnBase64;
     }
     
     
