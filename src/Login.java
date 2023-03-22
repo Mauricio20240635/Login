@@ -71,12 +71,22 @@ public class Login extends JFrame {
                 str2= passwordField.getText();
                 boolean Respuesta;
                 Respuesta = txt.readToFile(str,str2);
+         
                 if(Respuesta=true){
-
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            setVisible(false);
+       JOptionPane.showMessageDialog(null, "Se inicio sesion correctamente ");
+              Cifrado_Archivos llamar=new Cifrado_Archivos();
+      llamar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      llamar.setSize(1450,350);
+      llamar.setVisible(true);
+       
             }
+                
+            }
+                catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Intenta iniciar sesion de nuevo");
+            }
+            
         }
     }
 

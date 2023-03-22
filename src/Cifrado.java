@@ -12,10 +12,17 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Cifrado {
     
-    public static String cifrar(String texto) throws Exception {
+    /**
+     *
+     * @param texto
+     * @return
+     * @throws Exception
+     */
+    public String cifrar(String texto) throws Exception {
         // Generar una clave secreta
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(128);
@@ -34,6 +41,29 @@ public class Cifrado {
         // Combinar la clave y el texto cifrado en un solo string separado por un guion
         return claveEnBase64 + "-" + textoCifradoEnBase64;
     }
+    
+       public String decifrar(String texto) throws Exception {
+           String textoCifrado = texto;
+String[] partes = textoCifrado.split("-");
+String claveEnBase64 = partes[0];
+String textoCifradoEnBase64 = partes[1];
+
+
+byte[] claveEnBytes = Base64.getDecoder().decode(claveEnBase64);
+byte[] textoCifradoEnBytes = Base64.getDecoder().decode(textoCifradoEnBase64);
+
+SecretKeySpec clave = new SecretKeySpec(claveEnBytes, "AES");
+
+Cipher cipher = Cipher.getInstance("AES");
+cipher.init(Cipher.DECRYPT_MODE, clave);
+byte[] textoDescifradoEnBytes = cipher.doFinal(textoCifradoEnBytes);
+String textoDescifrado = new String(textoDescifradoEnBytes);
+
+System.out.println(textoDescifrado);
+return textoDescifrado;
+       }
+    
+    
     
     
 }
