@@ -45,16 +45,19 @@ public class Archivo {
           
               String save=cf.decifrar(storedPassword);
                 
-                if (username.equals(storedUsername) && save.equals(storedPassword)) {
+                if (username.equals(storedUsername) && password.equals(save)) {
                
                     s=true;
                     
+                }
+                else{
+                       s=false;   
                 }
             }
 
        
         } catch (IOException e) {
-         s=false;   
+        s=false;  
         }
         
          return s;

@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,17 +70,15 @@ public class Login extends JFrame {
                 str2= passwordField.getText();
                 boolean Respuesta;
                 Respuesta = txt.readToFile(str,str2);
-         
-                if(Respuesta=true){
-            setVisible(false);
-       JOptionPane.showMessageDialog(null, "Se inicio sesion correctamente ");
-              Cifrado_Archivos llamar=new Cifrado_Archivos();
-      llamar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      llamar.setSize(1450,350);
-      llamar.setVisible(true);
-       
-            }
-                
+                System.out.println(Respuesta);
+                if(Respuesta==true){   
+                setVisible(false);
+                    
+            } 
+                else{
+                  System.exit(0);
+                    
+                }
             }
                 catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Intenta iniciar sesion de nuevo");
